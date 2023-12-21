@@ -38,6 +38,7 @@ public class UserStock {
     )
     private Set<Stock> purchasedStocks = new HashSet<>();
 
+    // matching userStock, Portfolio_id
     @ManyToMany(mappedBy = "userStocks")
     private Set<Portfolio> portfolios = new HashSet<>();
 }
