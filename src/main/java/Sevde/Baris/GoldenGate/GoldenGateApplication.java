@@ -9,5 +9,4 @@ public class GoldenGateApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GoldenGateApplication.class, args);
 	}
-
 }
