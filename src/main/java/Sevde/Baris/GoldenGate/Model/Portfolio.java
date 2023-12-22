@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,11 +24,7 @@ public class Portfolio {
     @Column
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "user_stock_portfolio",
-            joinColumns = @JoinColumn(name = "portfolio_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_stock_id")
-    )
-    private Set<UserStock> userStocks = new HashSet<>();
-
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_stock_id")
+    private List<UserStock> userStocks;
 }

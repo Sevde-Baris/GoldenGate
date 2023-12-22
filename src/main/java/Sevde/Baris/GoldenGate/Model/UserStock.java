@@ -34,8 +34,4 @@ public class UserStock {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
     private Stock stock;
-
-    // matching userStock, Portfolio_id
-    @ManyToMany(mappedBy = "userStocks")
-    private Set<Portfolio> portfolios = new HashSet<>();
 }

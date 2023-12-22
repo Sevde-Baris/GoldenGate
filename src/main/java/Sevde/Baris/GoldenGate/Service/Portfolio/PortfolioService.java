@@ -42,7 +42,6 @@ public class PortfolioService implements IPortfolioService{
         if(portfolioToUpdateOptional.isPresent()){
             Portfolio portfolioToUpdate = portfolioToUpdateOptional.get();
             if(portfolio.getName() != null) portfolioToUpdate.setName(portfolio.getName());
-            if(portfolio.getUserStocks() != null) portfolioToUpdate.setUserStocks(portfolio.getUserStocks());
             return Optional.of(repository.save(portfolioToUpdate));
         }
         return Optional.empty();
@@ -58,13 +57,4 @@ public class PortfolioService implements IPortfolioService{
         }
         return Optional.empty();
     }
-
-    @Override
-    public Optional<Portfolio> removeStockFromPortfolio(UUID portfolioId, UUID stockId){
-        Optional<Portfolio> portfolioOptional = repository.findById(portfolioId);
-        Portfolio x = portfolioOptional.get();
-        x.getUserStocks()
-    }
-
-
 }

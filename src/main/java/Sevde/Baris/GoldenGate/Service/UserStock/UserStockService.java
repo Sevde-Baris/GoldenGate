@@ -89,7 +89,6 @@ public class UserStockService implements IUserStockService{
         Optional<UserStock> stockToUpdateOptional = repository.findById(id);
         if(stockToUpdateOptional.isPresent()){
             UserStock stockToUpdate = stockToUpdateOptional.get();
-            if(userStock.getPortfolios() != null) stockToUpdate.setPortfolios(userStock.getPortfolios());
             if(userStock.getPurchasingDate() != null) stockToUpdate.setPurchasingDate(userStock.getPurchasingDate());
             if(userStock.getPurchasingPrice() != null) stockToUpdate.setPurchasingPrice(userStock.getPurchasingPrice());
             if(userStock.getPurchasedLotAmount() != null) stockToUpdate.setPurchasedLotAmount(userStock.getPurchasedLotAmount());

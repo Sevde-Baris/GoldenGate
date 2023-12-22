@@ -13,8 +13,5 @@ public interface IPortfolioService {
     Portfolio createPortfolio(Portfolio portfolio);
     void deletePortfolio(UUID id);
     Optional<Portfolio> updatePortfolio(UUID id, Portfolio portfolio);
-
     Optional<Portfolio> addStockToPortfolio(UUID id, UserStock stock);
-
-    Optional<Portfolio> removeStockFromPortfolio(UUID portfolioId, UUID stockId);
 }
