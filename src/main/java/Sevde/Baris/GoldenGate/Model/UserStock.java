@@ -31,12 +31,9 @@ public class UserStock {
     @Column
     private Double purchasedLotAmount;
 
-    @ManyToMany
-    @JoinTable(name = "stock_user_stock",
-    joinColumns = @JoinColumn(name = "user_stock_id"),
-    inverseJoinColumns = @JoinColumn(name = "stock_id")
-    )
-    private Set<Stock> purchasedStocks = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
 
     // matching userStock, Portfolio_id
     @ManyToMany(mappedBy = "userStocks")

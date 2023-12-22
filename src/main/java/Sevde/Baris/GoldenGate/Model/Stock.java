@@ -52,8 +52,4 @@ public class Stock {
     @JoinColumn(name = "country_id")
     private Country country;
 
-    // matching userstock_id, stock_id
-    @ManyToMany(mappedBy = "purchasedStocks")
-    private Set<UserStock> userStocks = new HashSet<>();
-
 }
