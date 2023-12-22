@@ -1,6 +1,7 @@
 package Sevde.Baris.GoldenGate.Service.Portfolio;
 
 import Sevde.Baris.GoldenGate.Model.Portfolio;
+import Sevde.Baris.GoldenGate.Model.UserStock;
 import Sevde.Baris.GoldenGate.Repository.IPortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,32 @@ public class PortfolioService implements IPortfolioService{
 
     @Override
     public Optional<Portfolio> updatePortfolio(UUID id, Portfolio portfolio) {
+        Optional<Portfolio> portfolioToUpdateOptional = repository.findById(id);
+        if(portfolioToUpdateOptional.isPresent()){
+            Portfolio portfolioToUpdate = portfolioToUpdateOptional.get();
+            if(portfolio.getName() != null) portfolioToUpdate.setName(portfolio.getName());
+            if(portfolio.getUserStocks() != null) portfolioToUpdate.setUserStocks(portfolio.getUserStocks());
+            return Optional.of(repository.save(portfolioToUpdate));
+        }
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<Portfolio> addStockToPortfolio(UUID id, UserStock stock){
+        Optional<Portfolio> portfolioOptional = repository.findById(id);
+        if(portfolioOptional.isPresent()){
+            Portfolio portfolio = portfolioOptional.get();
+            portfolio.getUserStocks().add(stock);
+            return Optional.of(repository.save(portfolio));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Portfolio> removeStockFromPortfolio(UUID portfolioId, UUID stockId){
+        Optional<Portfolio> portfolioOptional = repository.findById(portfolioId);
+        Portfolio x = portfolioOptional.get();
+        x.getUserStocks()
     }
 
 
