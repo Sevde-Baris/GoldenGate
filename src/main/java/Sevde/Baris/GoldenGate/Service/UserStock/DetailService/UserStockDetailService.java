@@ -1,23 +1,49 @@
-package Sevde.Baris.GoldenGate.Service.UserStock;
+package Sevde.Baris.GoldenGate.Service.UserStock.DetailService;
 
-import Sevde.Baris.GoldenGate.DTO.UserStock.UserStockGetAllResponseDTO;
+import Sevde.Baris.GoldenGate.DTO.UserStock.GetAll.UserStockGetAllResponseDTO;
+import Sevde.Baris.GoldenGate.DTO.UserStock.GetDetail.UserStockDetailsDTO;
+import Sevde.Baris.GoldenGate.DTO.UserStock.GetDetail.UserStockGetDetailResponseDto;
 import Sevde.Baris.GoldenGate.Model.UserStock;
 import Sevde.Baris.GoldenGate.Repository.IUserStockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 @Service
-public class UserStockService implements IUserStockService{
+public class UserStockDetailService implements IUserStockDetailService {
 
     @Autowired
     private IUserStockRepository repository;
 
     public List<UserStockGetAllResponseDTO> getAllUserStockByPortfolioId(UUID id) {
-        List<UserStock> allUserStocks = repository.findByPortfolioId(id);
+        List<UserStock> allUserStocksInPortfolio = repository.findByPortfolioId(id);
+        return combineUserStocks(allUserStocksInPortfolio);
+    }
+
+    @Override
+    public UserStockGetDetailResponseDto getDetail(UUID portfolioId, String stockCode){
+        List<UserStock> stocks = repository.findByPortfolioIdAndStockCode(portfolioId, stockCode);
+        List<UserStockDetailsDTO> details = new ArrayList<>();
+        for(UserStock stock : stocks){
+            details.add(
+                    new UserStockDetailsDTO(
+                        stock.getPurchasingDate(),
+                        stock.getPurchasedLotAmount(),
+                        stock.getPurchasingPrice(),
+                        stock.getPurchasingPrice() * stock.getPurchasedLotAmount(),
+                        calculateTotalProfit(stock),
+                        calculateTotalProfitRate(stock)
+                    )
+            );
+        }
+        return new UserStockGetDetailResponseDto(combineUserStocks(stocks).getFirst(), details);
+    }
+
+    private List<UserStockGetAllResponseDTO> combineUserStocks(List<UserStock> stocks){
         List<UserStockGetAllResponseDTO> result = new ArrayList<>();
 
-        for (UserStock userStock : allUserStocks) {
+        for (UserStock userStock : stocks) {
             String stockCode = userStock.getStock().getCode();
+            String stockName = userStock.getStock().getName();
 
             // Check if the stockCode is already in the result list
             UserStockGetAllResponseDTO existingDTO = findDTOByStockCode(result, stockCode);
@@ -32,6 +58,7 @@ public class UserStockService implements IUserStockService{
                 // Create a new DTO
                 UserStockGetAllResponseDTO newDTO = new UserStockGetAllResponseDTO(
                         stockCode,
+                        stockName,
                         userStock.getPurchasedLotAmount(),
                         userStock.getPurchasingPrice(),
                         userStock.getPurchasingPrice() * userStock.getPurchasedLotAmount(),
@@ -68,6 +95,14 @@ public class UserStockService implements IUserStockService{
         return (userStock.getStock().getCurrentPrice() - userStock.getStock().getPriceYesterday()) / userStock.getStock().getPriceYesterday() * 100;
     }
 
+    private Double calculateTotalProfit(UserStock userStock){
+        return (userStock.getStock().getCurrentPrice() - userStock.getPurchasingPrice()) * userStock.getPurchasedLotAmount();
+    }
+
+    private Double calculateTotalProfitRate(UserStock userStock){
+        return (userStock.getStock().getCurrentPrice() - userStock.getPurchasingPrice()) / userStock.getPurchasingPrice() * 100;
+    }
+
     private UserStockGetAllResponseDTO findDTOByStockCode(List<UserStockGetAllResponseDTO> list, String stockCode) {
         for (UserStockGetAllResponseDTO dto : list) {
             if (dto.getStockCode().equals(stockCode)) {
@@ -76,28 +111,5 @@ public class UserStockService implements IUserStockService{
         }
         return null;
     }
-    @Override
-    public Optional<UserStock> getUserStockById(UUID id) {
-        return repository.findById(id);
-    }
-    @Override
-    public UserStock createUserStock(UserStock userStock) {
-        return repository.save(userStock);
-    }
-    @Override
-    public Optional<Object> updateUserStock(UUID id, UserStock userStock) {
-        Optional<UserStock> stockToUpdateOptional = repository.findById(id);
-        if(stockToUpdateOptional.isPresent()){
-            UserStock stockToUpdate = stockToUpdateOptional.get();
-            if(userStock.getPurchasingDate() != null) stockToUpdate.setPurchasingDate(userStock.getPurchasingDate());
-            if(userStock.getPurchasingPrice() != null) stockToUpdate.setPurchasingPrice(userStock.getPurchasingPrice());
-            if(userStock.getPurchasedLotAmount() != null) stockToUpdate.setPurchasedLotAmount(userStock.getPurchasedLotAmount());
-            return Optional.of(repository.save(stockToUpdate));
-        }
-        return Optional.empty();
-    }
-    @Override
-    public void deleteUserStock(UUID id) {
-        repository.deleteById(id);
-    }
+
 }
