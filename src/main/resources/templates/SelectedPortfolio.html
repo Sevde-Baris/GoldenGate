@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolios</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #a74444;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #c03232;
+    }
+    tr:nth-child(even) {
+      background-color: #f68585;
+    }
+    tr:hover {
+      background-color: #772323;
+    }
+  </style>
+</head>
+<body>
+<h1>Selected Portfolio</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Stock Code</th>
+    <th>Total Price</th>
+    <th>Lot Amount</th>
+    <th>Average Cost</th>
+    <th>Daily Profit</th>
+    <th>Daily Profit Rate</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="data : ${stocks}">
+    <td th:text="${data.getStockCode()}"></td>
+    <td th:text="${data.getTotalPrice()}"></td>
+    <td th:text="${data.getTotalLotAmount()}"></td>
+    <td th:text="${data.getAverageCost()}"></td>
+    <td th:text="${data.getDailyProfit()}"></td>
+    <td th:text="${data.getDailyProfitRate()}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

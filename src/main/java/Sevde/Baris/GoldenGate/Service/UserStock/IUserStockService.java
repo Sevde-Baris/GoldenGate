@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface IUserStockService {
-    List<UserStockGetAllResponseDTO> getAllUserStock();
+    List<UserStockGetAllResponseDTO> getAllUserStockByPortfolioId(UUID id);
     Optional<UserStock> getUserStockById(UUID id);
     UserStock createUserStock(UserStock userStock);
     Optional<Object> updateUserStock(UUID id, UserStock userStock);

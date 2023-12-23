@@ -23,8 +23,4 @@ public class Portfolio {
 
     @Column
     private String name;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_stock_id")
-    private List<UserStock> userStocks;
 }

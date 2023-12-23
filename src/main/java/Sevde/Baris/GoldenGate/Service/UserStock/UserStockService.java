@@ -12,8 +12,8 @@ public class UserStockService implements IUserStockService{
     @Autowired
     private IUserStockRepository repository;
 
-    public List<UserStockGetAllResponseDTO> getAllUserStock() {
-        List<UserStock> allUserStocks = repository.findAll();
+    public List<UserStockGetAllResponseDTO> getAllUserStockByPortfolioId(UUID id) {
+        List<UserStock> allUserStocks = repository.findByPortfolioId(id);
         List<UserStockGetAllResponseDTO> result = new ArrayList<>();
 
         for (UserStock userStock : allUserStocks) {
@@ -35,7 +35,7 @@ public class UserStockService implements IUserStockService{
                         userStock.getPurchasedLotAmount(),
                         userStock.getPurchasingPrice(),
                         userStock.getPurchasingPrice() * userStock.getPurchasedLotAmount(),
-                        (userStock.getStock().getPriceYesterday() - userStock.getStock().getCurrentPrice()) * userStock.getPurchasedLotAmount(),
+                        (userStock.getStock().getCurrentPrice() - userStock.getStock().getPriceYesterday()) * userStock.getPurchasedLotAmount(),
                         (userStock.getStock().getCurrentPrice() - userStock.getStock().getPriceYesterday()) / userStock.getStock().getPriceYesterday() * 100
                 );
                 result.add(newDTO);
