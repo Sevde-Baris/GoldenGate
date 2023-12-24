@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -36,18 +34,27 @@ public class PortfolioController {
         return "SelectedPortfolio";
     }
 
-    @PostMapping("/createPortfolio")
-    public Portfolio createPortfolio(@RequestParam String name){
-        return portfolioService.createPortfolio(name);
+    @GetMapping("/createPortfolio")
+    public String createPortfolio(@RequestParam String name, Model model){
+        portfolioService.createPortfolio(name);
+        List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+        model.addAttribute("portfolios", portfolios);
+        return "redirect:/Portfolio/getPortfolio";
     }
 
-    @DeleteMapping("/deletePortfolio")
-    public void deletePortfolio(@RequestParam UUID id){
+    @GetMapping("/deletePortfolio")
+    public String deletePortfolio(@RequestParam UUID id, Model model){
         portfolioService.deletePortfolio(id);
+        List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+        model.addAttribute("portfolios", portfolios);
+        return "redirect:/Portfolio/getPortfolio";
     }
 
-    @PutMapping("/updatePortfolio")
-    public Optional<Portfolio> updatePortfolio(@RequestParam UUID id, String name){
-        return portfolioService.updatePortfolio(id, name);
+    @GetMapping("/updatePortfolio")
+    public String updatePortfolio(@RequestParam UUID id, String name, Model model){
+        portfolioService.updatePortfolio(id, name);
+        List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+        model.addAttribute("portfolios", portfolios);
+        return "redirect:/Portfolio/getPortfolio";
     }
 }
