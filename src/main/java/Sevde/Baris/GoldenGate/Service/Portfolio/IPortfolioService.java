@@ -13,4 +13,6 @@ public interface IPortfolioService {
     void deletePortfolio(UUID id);
     Optional<Portfolio> updatePortfolio(UUID id, String name);
     Optional<Portfolio> addStockToPortfolio(UUID id, UserStock stock);
+
+    Optional<Portfolio> getPortfolioById(UUID id);
 }

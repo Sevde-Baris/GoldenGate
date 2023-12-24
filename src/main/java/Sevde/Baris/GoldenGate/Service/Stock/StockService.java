@@ -1,7 +1,7 @@
 package Sevde.Baris.GoldenGate.Service.Stock;
 
-import Sevde.Baris.GoldenGate.Model.Country;
 import Sevde.Baris.GoldenGate.Model.Stock;
+import Sevde.Baris.GoldenGate.Repository.ICountryRepository;
 import Sevde.Baris.GoldenGate.Repository.IStockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,21 +14,27 @@ import java.util.UUID;
 public class StockService implements IStockService{
 
     @Autowired
-    private IStockRepository repository;
+    private IStockRepository stockRepository;
+    @Autowired
+    private ICountryRepository countryRepository;
 
     @Override
     public List<Stock> getAllStock() {
-        return repository.findAll();
+        return stockRepository.findAll();
     }
 
     @Override
     public Optional<Stock> getStockById(UUID id) {
-        return repository.findById(id);
+        return stockRepository.findById(id);
     }
 
-    // it will be checked.
     @Override
-    public List<Stock> getStockByCountry(Country country) {
-        return repository.findByCountry(country);
+    public List<Stock> getStockByCountryName(String name) {
+        return stockRepository.findByCountry(countryRepository.findByName(name));
+    }
+
+    @Override
+    public Stock getStockByName(String name){
+        return  stockRepository.findByName(name);
     }
 }

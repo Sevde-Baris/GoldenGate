@@ -58,4 +58,9 @@ public class PortfolioService implements IPortfolioService{
         }
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Portfolio> getPortfolioById(UUID id){
+        return portfolioRepository.findById(id);
+    }
 }

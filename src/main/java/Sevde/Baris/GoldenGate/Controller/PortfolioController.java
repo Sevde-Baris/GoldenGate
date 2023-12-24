@@ -2,7 +2,12 @@ package Sevde.Baris.GoldenGate.Controller;
 
 import Sevde.Baris.GoldenGate.DTO.UserStock.GetAll.UserStockGetAllResponseDTO;
 import Sevde.Baris.GoldenGate.Model.Portfolio;
+import Sevde.Baris.GoldenGate.Service.Country.ICountryService;
+import Sevde.Baris.GoldenGate.Service.Portfolio.IPortfolioService;
 import Sevde.Baris.GoldenGate.Service.Portfolio.PortfolioService;
+import Sevde.Baris.GoldenGate.Service.UserStock.BasicCRUDService.IUserStockBasicCRUDService;
+import Sevde.Baris.GoldenGate.Service.UserStock.BasicCRUDService.UserStockBasicCRUDService;
+import Sevde.Baris.GoldenGate.Service.UserStock.DetailService.IUserStockDetailService;
 import Sevde.Baris.GoldenGate.Service.UserStock.DetailService.UserStockDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +20,11 @@ import java.util.UUID;
 @RequestMapping("/Portfolio")
 public class PortfolioController {
     @Autowired
-    private PortfolioService portfolioService;
+    private IPortfolioService portfolioService;
     @Autowired
-    private UserStockDetailService userStockService;
+    private IUserStockDetailService userStockDetailService;
+    @Autowired
+    private IUserStockBasicCRUDService userStockBasicService;
 
     @GetMapping("/getPortfolio")
     public String getPortfolio(Model model){
@@ -28,7 +35,7 @@ public class PortfolioController {
 
     @GetMapping("/getPortfolioById")
     public String getPortfolioById(@RequestParam UUID id, Model model){
-        List<UserStockGetAllResponseDTO> userStocks = userStockService.getAllUserStockByPortfolioId(id);
+        List<UserStockGetAllResponseDTO> userStocks = userStockDetailService.getAllUserStockByPortfolioId(id);
         model.addAttribute("stocks", userStocks);
         model.addAttribute("portfolioId", id);
         return "SelectedPortfolio";

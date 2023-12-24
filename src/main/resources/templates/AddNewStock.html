@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+
+    #task-bar {
+        display: flex;
+        align-items: center;
+        background-color: #5520c0;
+        border-bottom: 1px solid #fff;
+        text-align: center;
+        padding: 10px;
+    }
+
+    #task-bar img {
+        width: 100px;
+        height: auto;
+        margin-right: 10px;
+    }
+
+    #task-bar #brand {
+        color: #f2f2f2;
+        font-size: 24px;
+        margin-right: auto;
+    }
+
+    #task-bar a {
+        color: #f2f2f2;
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    #task-bar a:hover {
+        background-color: #f5e533;
+        color: black;
+    }
+
+    #country {
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 200px; /* Adjust width as needed */
+    }
+
+    /* Style the options */
+    #country option {
+        font-size: 14px;
+        background-color: #fff;
+        color: #000;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#countryDropdown').change(function() {
+            const selectedValue = document.getElementById("countryDropdown").value; // Get the selected value from the first dropdown
+
+            $.ajax({
+                type: 'GET',
+                url: '/StockDetail/getStocksByCountry', // Replace with your server-side endpoint URL
+                data: { 'country': selectedValue },
+                success: function(response) {
+                    var stockDropdown = $('#stockDropdown');
+                    stockDropdown.empty(); // Clear previous options
+
+                    // Populate the second dropdown with options from the response
+                    $.each(response, function(index, item) {
+                        stockDropdown.append($('<option></option>').text(item));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+</script>
+<body>
+
+<div id="task-bar">
+    <img th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo"/>
+    <span id="brand">Golden Gate</span>
+    <a th:href="@{/Portfolio}">Portfolios</a>
+</div>
+<div id="inputAreas">
+    <label for="countryDropdown">Select Country</label>
+    <select id="countryDropdown">
+        <option>Please Select A Country</option>
+        <option th:each="item : ${countryNames}" th:text="${item}"></option>
+    </select>
+    <form th:action="@{/StockDetail/createNewStock}" th:method="get">
+        <label for="stockDropdown">Select Stock</label>
+        <select id="stockDropdown" name="stockName"></select>
+        <label for="purchasingDate">purchasingDate</label>
+        <input type="date" id="purchasingDate" name="purchasingDate" required>
+        <label for="purchasingPrice">purchasingPrice</label>
+        <input type="number" id="purchasingPrice" name="purchasingPrice" required>
+        <label for="purchasingLotAmount">purchasingLotAmount</label>
+        <input type="number" id="purchasingLotAmount" name="purchasedLotAmount" required>
+
+        <!-- Hidden input field for portfolioId -->
+        <input type="hidden" id="portfolioId" name="portfolioId" th:value="${portfolioId}">
+
+        <button type="submit">Add Stock</button>
+    </form>
+
+</div>
+
+</body>
+</html>
