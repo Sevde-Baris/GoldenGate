@@ -27,7 +27,8 @@ public class PortfolioService implements IPortfolioService{
 
     @Override
     public Portfolio createPortfolio(String name) {
-        return portfolioRepository.saveByName(name);
+        Portfolio portfolio = portfolioRepository.findByName(name);
+        return portfolioRepository.save(portfolio);
     }
 
     @Override
