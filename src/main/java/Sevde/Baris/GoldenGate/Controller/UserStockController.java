@@ -24,6 +24,7 @@ import java.util.UUID;
 @Controller()
 @RequestMapping("/StockDetail")
 public class UserStockController {
+
     @Autowired
     private IUserStockDetailService detailService;
     @Autowired
