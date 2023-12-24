@@ -22,7 +22,7 @@
         }
 
         #task-bar img {
-            width: 100px;
+            width: 80px;
             height: auto;
             margin-right: 10px;
         }
@@ -55,7 +55,10 @@
         }
 
         table {
-            width: 100%;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+            width: 75%;
             border-collapse: collapse;
             margin-top: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -65,7 +68,7 @@
         th, td {
             border: 1px solid #7753d3;
             padding: 12px;
-            text-align: left;
+            text-align: center;
         }
 
         th {
@@ -82,38 +85,42 @@
             color: #fff;
         }
 
-        button {
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .button-container button {
             background-color: #5520c0;
             color: #fff;
             border: none;
-            padding: 10px 16px;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 100px;
+            white-space: nowrap;
+        }
+
+        .button-container button:hover {
+            background-color: #5520c0;
+        }
+
+        .update-button, .delete-button {
+            background-color: #5520c0;
+            color: #fff;
+            border: 10px;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
             margin: 5px;
-        }
-
-        button:hover {
-            background-color: #8b70ee;
+            padding: 10px 16px;
         }
 
         button:focus {
             outline: none;
-        }
-
-        .delete-button {
-            background-color: #5520c0;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 5px;
-        }
-
-        .delete-button:hover {
-            background-color: #5520c0;
         }
 
         /* Popup styles */
@@ -129,7 +136,7 @@
             align-items: center;
         }
 
-        #popup-content {
+        #popup-content{
             background-color: #fff;
             width: 300px;
             padding: 20px;
@@ -168,10 +175,9 @@
         }
 
         #popup button.cancel {
-            background-color: #ccc;
+            background-color: #fff;
             color: #333;
         }
-
 
     </style>
     <script>
@@ -215,16 +221,16 @@
             <tbody>
             <tr th:each="data : ${portfolios}">
                 <td th:text="${data.getName()}"></td>
-                <td>
+                <td class="button-container">
                     <form th:action="@{/Portfolio/getPortfolioById}" th:method="get">
                         <input type="hidden" th:name="id" th:value="${data.getId()}"/>
                         <button type="submit">Show Stocks</button>
                     </form>
+                    <button id="updateButton" type="button" class="update-button" th:value="${data.getId()}" onclick="openUpdatePopup()">Update</button>
                     <form th:action="@{/Portfolio/deletePortfolio}" th:method="delete">
                         <input type="hidden" th:name="id" th:value="${data.getId()}"/>
                         <button type="submit" class="delete-button">Delete</button>
                     </form>
-                    <button id="updateButton" type="button" class="update-button" th:value="${data.getId()}" onclick="openUpdatePopup()">Update</button>
                 </td>
             </tr>
             </tbody>
