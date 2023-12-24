@@ -160,5 +160,26 @@
     </form>
 </div>
 
+<h1>Portfolios</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="data : ${portfolios}">
+            <td th:text="${data.getName()}"></td>
+            <td>
+                <form th:action="@{/Portfolio/getPortfolioById}" th:method="get">
+                    <input type="hidden" th:name="id" th:value="${data.getId()}"/>
+                    <button type="submit">Show Stocks</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>
