@@ -9,4 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface IPortfolioRepository extends JpaRepository<Portfolio, UUID> {
+    Portfolio saveByName(String name);
 }
