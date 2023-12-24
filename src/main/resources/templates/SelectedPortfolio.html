@@ -39,10 +39,14 @@
       background-color: #f5e533;
       color: black;
     }
+
     table {
-      width: 100%;
+      width: 80%;
       border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 40px;
+      align-items: center;
+      justify-content: center;
+      margin-left: 140px;
     }
     th, td {
       border: 1px solid #5520c0;
@@ -61,6 +65,19 @@
     h1 {
       font-family: 'Roboto Condensed', sans-serif;
       text-align: center;
+    }
+    button {
+      background-color: #5520c0;
+      color: #f2f2f2;
+      padding: 8px 12px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #f5e533;
+      color: black;
     }
   </style>
 
@@ -93,16 +110,18 @@
       <td th:text="${data.getDailyProfit()}"></td>
       <td th:text="${data.getDailyProfitRate()}"></td>
       <td>
-        <form th:action="@{/StockDetail/getStockDetail}" th:method="get">
-          <input type="hidden" th:name="portfolioId" th:value="${portfolioId}">
-          <input type="hidden" th:name="stockCode" th:value="${data.getStockCode()}">
-          <button type="submit">Show Details</button>
-        </form>
-        <form th:action="@{/StockDetail/deleteStock}" th:method="get">
-          <input type="hidden" th:name="userStockId" th:value="${data.getId()}">
-          <input type="hidden" th:name="portfolioId" th:value="${portfolioId}">
-          <button type="submit">Delete</button>
-        </form>
+        <div style="display: flex; gap: 8px;">
+          <form th:action="@{/StockDetail/getStockDetail}" th:method="get">
+            <input type="hidden" th:name="portfolioId" th:value="${portfolioId}">
+            <input type="hidden" th:name="stockCode" th:value="${data.getStockCode()}">
+            <button type="submit">Show Details</button>
+          </form>
+          <form th:action="@{/StockDetail/deleteStock}" th:method="get">
+            <input type="hidden" th:name="userStockId" th:value="${data.getId()}">
+            <input type="hidden" th:name="portfolioId" th:value="${portfolioId}">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
       </td>
     </tr>
     </tbody>

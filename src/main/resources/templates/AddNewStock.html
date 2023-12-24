@@ -2,84 +2,116 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<style>
+    <title>Golden Gate</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-    #task-bar {
-        display: flex;
-        align-items: center;
-        background-color: #5520c0;
-        border-bottom: 1px solid #fff;
-        text-align: center;
-        padding: 10px;
-    }
+        #task-bar {
+            display: flex;
+            align-items: center;
+            background-color: #5520c0;
+            border-bottom: 1px solid #fff;
+            text-align: center;
+            padding: 10px;
+        }
 
-    #task-bar img {
-        width: 100px;
-        height: auto;
-        margin-right: 10px;
-    }
+        #task-bar img {
+            width: 80px;
+            height: auto;
+            margin-right: 10px;
+        }
 
-    #task-bar #brand {
-        color: #f2f2f2;
-        font-size: 24px;
-        margin-right: auto;
-    }
+        #task-bar #brand {
+            color: #f2f2f2;
+            font-size: 24px;
+            margin-right: auto;
+        }
 
-    #task-bar a {
-        color: #f2f2f2;
-        padding: 14px 16px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-    }
+        #task-bar a {
+            color: #f2f2f2;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
 
-    #task-bar a:hover {
-        background-color: #f5e533;
-        color: black;
-    }
+        #task-bar a:hover {
+            background-color: #f5e533;
+            color: black;
+        }
 
-    #country {
-        padding: 8px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        width: 200px; /* Adjust width as needed */
-    }
+        #inputAreas {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    /* Style the options */
-    #country option {
-        font-size: 14px;
-        background-color: #fff;
-        color: #000;
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#countryDropdown').change(function() {
-            const selectedValue = document.getElementById("countryDropdown").value; // Get the selected value from the first dropdown
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
 
-            $.ajax({
-                type: 'GET',
-                url: '/StockDetail/getStocksByCountry', // Replace with your server-side endpoint URL
-                data: { 'country': selectedValue },
-                success: function(response) {
-                    var stockDropdown = $('#stockDropdown');
-                    stockDropdown.empty(); // Clear previous options
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-                    // Populate the second dropdown with options from the response
-                    $.each(response, function(index, item) {
-                        stockDropdown.append($('<option></option>').text(item));
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
+        }
+
+        button {
+            background-color: #5520c0;
+            color: #fff;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #f5e533;
+            color: black;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#countryDropdown').change(function() {
+                const selectedValue = document.getElementById("countryDropdown").value;
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/StockDetail/getStocksByCountry',
+                    data: { 'country': selectedValue },
+                    success: function(response) {
+                        var stockDropdown = $('#stockDropdown');
+                        stockDropdown.empty();
+
+                        $.each(response, function(index, item) {
+                            stockDropdown.append($('<option></option>').text(item));
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+</head>
 <body>
 
 <div id="task-bar">
@@ -87,28 +119,32 @@
     <span id="brand">Golden Gate</span>
     <a th:href="@{/Portfolio}">Portfolios</a>
 </div>
+
 <div id="inputAreas">
-    <label for="countryDropdown">Select Country</label>
-    <select id="countryDropdown">
-        <option>Please Select A Country</option>
-        <option th:each="item : ${countryNames}" th:text="${item}"></option>
-    </select>
+    <h2>Add New Stock</h2>
     <form th:action="@{/StockDetail/createNewStock}" th:method="get">
+        <label for="countryDropdown">Select Country</label>
+        <select id="countryDropdown">
+            <option>Please Select A Country</option>
+            <option th:each="item : ${countryNames}" th:text="${item}"></option>
+        </select>
+
         <label for="stockDropdown">Select Stock</label>
         <select id="stockDropdown" name="stockName"></select>
-        <label for="purchasingDate">purchasingDate</label>
+
+        <label for="purchasingDate">Purchasing Date</label>
         <input type="date" id="purchasingDate" name="purchasingDate" required>
-        <label for="purchasingPrice">purchasingPrice</label>
+
+        <label for="purchasingPrice">Purchasing Price</label>
         <input type="number" id="purchasingPrice" name="purchasingPrice" required>
-        <label for="purchasingLotAmount">purchasingLotAmount</label>
+
+        <label for="purchasingLotAmount">Purchasing Lot Amount</label>
         <input type="number" id="purchasingLotAmount" name="purchasedLotAmount" required>
 
-        <!-- Hidden input field for portfolioId -->
         <input type="hidden" id="portfolioId" name="portfolioId" th:value="${portfolioId}">
 
         <button type="submit">Add Stock</button>
     </form>
-
 </div>
 
 </body>
