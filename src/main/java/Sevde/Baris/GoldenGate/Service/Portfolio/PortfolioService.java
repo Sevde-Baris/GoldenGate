@@ -52,7 +52,6 @@ public class PortfolioService implements IPortfolioService{
         Optional<Portfolio> portfolioOptional = repository.findById(id);
         if(portfolioOptional.isPresent()){
             Portfolio portfolio = portfolioOptional.get();
-            portfolio.getUserStocks().add(stock);
             return Optional.of(repository.save(portfolio));
         }
         return Optional.empty();

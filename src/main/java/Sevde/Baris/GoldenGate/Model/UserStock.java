@@ -34,4 +34,8 @@ public class UserStock {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
     private Stock stock;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "portfolio_id")
+    private Portfolio portfolio;
 }
