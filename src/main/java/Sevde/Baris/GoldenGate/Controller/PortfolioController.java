@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +31,17 @@ public class PortfolioController {
     @GetMapping("/getPortfolio")
     public String getPortfolio(Model model){
         List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+        List<Double> portfolioBalances = new ArrayList<>();
+        for (int i = 0; i < portfolios.size(); i++) {
+            List<UserStockGetAllResponseDTO> userStocks = userStockDetailService.getAllUserStockByPortfolioId(portfolios.get(i).getId());
+            Double portfolioBalance = 0D;
+            for (int j = 0; j < userStocks.size(); j++) {
+                portfolioBalance += userStocks.get(j).getTotalPrice();
+            }
+            portfolioBalances.add(portfolioBalance);
+        }
         model.addAttribute("portfolios", portfolios);
+        model.addAttribute("portfolioBalances", portfolioBalances);
         return "Portfolio";
     }
 

@@ -226,7 +226,7 @@
     <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo"/>
     <span id="brand">Golden Gate</span>
     <a href="javascript:void(0);" onclick="openPopup()">Create New Portfolio</a>
-    <a th:href="@{/Stock/getStockMarket}">Stock Markets</a>
+    <a href="/AllStocks/getStocks">All Stocks</a>
 </div>
 
 <div class="content">
@@ -237,24 +237,29 @@
             <tr>
                 <th>Name</th>
                 <th>Operations</th>
+                <th>Portfolio Balance</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="data : ${portfolios}">
-                <td th:text="${data.getName()}"></td>
+            <!-- Loop through portfolios -->
+            <tr th:each="portfolio, iterStat : ${portfolios}">
+                <td th:text="${portfolio.name}"></td>
+                <!-- Assuming iterStat.index corresponds to the index in portfolioBalances -->
                 <td>
                     <div class="button-group">
                         <form th:action="@{/Portfolio/getPortfolioById}" th:method="get">
-                            <input type="hidden" th:name="id" th:value="${data.getId()}"/>
+                            <input type="hidden" th:name="id" th:value="${portfolio.id}"/>
                             <button type="submit" class="show-stocks-button">Show Stocks</button>
                         </form>
-                        <button id="updateButton" type="button" class="update-button" th:value="${data.getId()}" onclick="openUpdatePopup()">Update</button>
+                        <button type="button" class="update-button" th:value="${portfolio.id}" onclick="openUpdatePopup(${iterStat.index})">Update</button>
                         <form th:action="@{/Portfolio/deletePortfolio}" th:method="get">
-                            <input type="hidden" th:name="id" th:value="${data.getId()}"/>
+                            <input type="hidden" th:name="id" th:value="${portfolio.id}"/>
                             <button type="submit" class="delete-button">Delete</button>
                         </form>
                     </div>
                 </td>
+                <!-- Access corresponding balance using iterStat.index -->
+                <td th:text="${portfolioBalances[iterStat.index]}"></td>
             </tr>
             </tbody>
 
