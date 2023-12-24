@@ -55,7 +55,7 @@
 </head>
 <body>
 <h1>Portfolios</h1>
-<form th:action="@{/Portfolio/getPortfolioById}" th:method="get">
+
     <table>
         <thead>
         <tr>
@@ -64,15 +64,16 @@
         </thead>
         <tbody>
         <tr th:each="data : ${portfolios}">
+            <td th:text="${data.getName()}"></td>
             <td>
-                <input type="hidden" th:name="id" th:value="${data.getId()}"/>
-                <button type="submit" th:value="${data.getName()}">
-                    <span th:text="${data.getName()}"></span>
-                </button>
+                <form th:action="@{/Portfolio/getPortfolioById}" th:method="get">
+                    <input type="hidden" th:name="id" th:value="${data.getId()}"/>
+                    <button type="submit">Show Stocks</button>
+                </form>
             </td>
         </tr>
         </tbody>
     </table>
-</form>
+
 </body>
 </html>
