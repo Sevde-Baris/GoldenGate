@@ -4,11 +4,12 @@
     <title>Stock Detail</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f8f8;
             color: #333;
             margin: 0;
             padding: 20px;
+            text-align: center;
         }
 
         h1, h2 {
@@ -21,19 +22,23 @@
 
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: 90%;
             margin-top: 20px;
+            margin-left: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         th, td {
             border: 1px solid #dddddd;
             text-align: left;
-            padding: 8px;
+            padding: 12px;
         }
 
         th {
-            background-color: #ffd700; /* Golden Yellow */
-            color: #663399;
+            background-color: #663399; /* Purple */
+            color: #fff;
         }
 
         tr:nth-child(even) {
@@ -50,13 +55,15 @@
 <h1>Stock Detail</h1>
 <!-- Display rough data -->
 <h2>Rough Data:</h2>
-<p><span>Stock Code:</span> <span th:text="${stockDetail.roughData.stockCode}"></span></p>
-<p><span>Stock Name:</span> <span th:text="${stockDetail.roughData.stockName}"></span></p>
-<p><span>Total Lot Amount:</span> <span th:text="${stockDetail.roughData.totalLotAmount}"></span></p>
-<p><span>Average Cost:</span> <span th:text="${stockDetail.roughData.averageCost}"></span></p>
-<p><span>Total Price:</span> <span th:text="${stockDetail.roughData.totalPrice}"></span></p>
-<p><span>Daily Profit:</span> <span th:text="${stockDetail.roughData.dailyProfit}"></span></p>
-<p><span>Daily Profit Rate:</span> <span th:text="${stockDetail.roughData.dailyProfitRate}"></span></p>
+<div style="background-color: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+    <p><span>Stock Code : </span> <span th:text="${stockDetail.roughData.stockCode}"></span></p>
+    <p><span>Stock Name : </span> <span th:text="${stockDetail.roughData.stockName}"></span></p>
+    <p><span>Total Lot Amount : </span> <span th:text="${stockDetail.roughData.totalLotAmount}"></span></p>
+    <p><span>Average Cost : </span> <span th:text="${stockDetail.roughData.averageCost}"></span></p>
+    <p><span>Total Price : </span> <span th:text="${stockDetail.roughData.totalPrice}"></span></p>
+    <p><span>Daily Profit : </span> <span th:text="${stockDetail.roughData.dailyProfit}"></span></p>
+    <p><span>Daily Profit Rate : </span> <span th:text="${stockDetail.roughData.dailyProfitRate}"></span></p>
+</div>
 
 <!-- Display details list -->
 <h2>Details:</h2>
@@ -85,4 +92,3 @@
 </table>
 </body>
 </html>
-
