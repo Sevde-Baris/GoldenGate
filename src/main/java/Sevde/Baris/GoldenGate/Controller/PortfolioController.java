@@ -7,10 +7,10 @@ import Sevde.Baris.GoldenGate.Service.UserStock.DetailService.UserStockDetailSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -34,5 +34,20 @@ public class PortfolioController {
         model.addAttribute("stocks", userStocks);
         model.addAttribute("portfolioId", id);
         return "SelectedPortfolio";
+    }
+
+    @PostMapping("/createPortfolio")
+    public Portfolio createPortfolio(@RequestParam String name){
+        return portfolioService.createPortfolio(name);
+    }
+
+    @DeleteMapping("/deletePortfolio")
+    public void deletePortfolio(@RequestParam UUID id){
+        portfolioService.deletePortfolio(id);
+    }
+
+    @PutMapping("/updatePortfolio")
+    public Optional<Portfolio> updatePortfolio(@RequestParam UUID id, String name){
+        return portfolioService.updatePortfolio(id, name);
     }
 }

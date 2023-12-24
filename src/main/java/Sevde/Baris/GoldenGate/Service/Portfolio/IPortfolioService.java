@@ -9,9 +9,8 @@ import java.util.UUID;
 
 public interface IPortfolioService {
     List<Portfolio> getAllPortfolios();
-    Optional<Portfolio> getPortfolioById(UUID id);
-    Portfolio createPortfolio(Portfolio portfolio);
+    Portfolio createPortfolio(String name);
     void deletePortfolio(UUID id);
-    Optional<Portfolio> updatePortfolio(UUID id, Portfolio portfolio);
+    Optional<Portfolio> updatePortfolio(UUID id, String name);
     Optional<Portfolio> addStockToPortfolio(UUID id, UserStock stock);
 }

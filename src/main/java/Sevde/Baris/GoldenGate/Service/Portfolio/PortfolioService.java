@@ -3,6 +3,7 @@ package Sevde.Baris.GoldenGate.Service.Portfolio;
 import Sevde.Baris.GoldenGate.Model.Portfolio;
 import Sevde.Baris.GoldenGate.Model.UserStock;
 import Sevde.Baris.GoldenGate.Repository.IPortfolioRepository;
+import Sevde.Baris.GoldenGate.Repository.IUserStockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,45 +15,44 @@ import java.util.UUID;
 public class PortfolioService implements IPortfolioService{
 
     @Autowired
-    private IPortfolioRepository repository;
+    private IPortfolioRepository portfolioRepository;
+
+    @Autowired
+    private IUserStockRepository userStockRepository;
 
     @Override
     public List<Portfolio> getAllPortfolios() {
-        return repository.findAll();
+        return portfolioRepository.findAll();
     }
 
     @Override
-    public Optional<Portfolio> getPortfolioById(UUID id) {
-        return repository.findById(id);
-    }
-
-    @Override
-    public Portfolio createPortfolio(Portfolio portfolio) {
-        return repository.save(portfolio);
+    public Portfolio createPortfolio(String name) {
+        return portfolioRepository.saveByName(name);
     }
 
     @Override
     public void deletePortfolio(UUID id) {
-        repository.deleteById(id);
+        userStockRepository.deleteAllByPortfolioId(id);
+        portfolioRepository.deleteById(id);
     }
 
     @Override
-    public Optional<Portfolio> updatePortfolio(UUID id, Portfolio portfolio) {
-        Optional<Portfolio> portfolioToUpdateOptional = repository.findById(id);
+    public Optional<Portfolio> updatePortfolio(UUID id, String name) {
+        Optional<Portfolio> portfolioToUpdateOptional = portfolioRepository.findById(id);
         if(portfolioToUpdateOptional.isPresent()){
             Portfolio portfolioToUpdate = portfolioToUpdateOptional.get();
-            if(portfolio.getName() != null) portfolioToUpdate.setName(portfolio.getName());
-            return Optional.of(repository.save(portfolioToUpdate));
+            if(name != null) portfolioToUpdate.setName(name);
+            return Optional.of(portfolioRepository.save(portfolioToUpdate));
         }
         return Optional.empty();
     }
 
     @Override
     public Optional<Portfolio> addStockToPortfolio(UUID id, UserStock stock){
-        Optional<Portfolio> portfolioOptional = repository.findById(id);
+        Optional<Portfolio> portfolioOptional = portfolioRepository.findById(id);
         if(portfolioOptional.isPresent()){
             Portfolio portfolio = portfolioOptional.get();
-            return Optional.of(repository.save(portfolio));
+            return Optional.of(portfolioRepository.save(portfolio));
         }
         return Optional.empty();
     }
