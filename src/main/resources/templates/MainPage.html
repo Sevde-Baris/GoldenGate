@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+
+    #task-bar {
+        display: flex;
+        align-items: center;
+        background-color: #5520c0;
+        border-bottom: 1px solid #fff;
+        text-align: center;
+        padding: 10px;
+    }
+
+    #task-bar img {
+        width: 100px;
+        height: auto;
+        margin-right: 10px;
+    }
+
+    #task-bar #brand {
+        color: #f2f2f2;
+        font-size: 24px;
+        margin-right: auto;
+    }
+
+    #task-bar a {
+        color: #f2f2f2;
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    #task-bar a:hover {
+        background-color: #f5e533;
+        color: black;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+
+</style>
+<body>
+
+<div id="task-bar">
+    <img th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo"/>
+    <span id="brand">Golden Gate</span>
+    <a th:href="@{/mainpage}">Main Page</a>
+    <a th:href="@{/allstocks}">All Stocks</a>
+    <a th:href="@{/mystocks}">My Stocks (Portfolio)</a>
+    <a th:href="@{/addstock}">Add Stock</a>
+</div>
+
+</body>
+</html>
