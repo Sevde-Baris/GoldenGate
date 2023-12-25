@@ -25,18 +25,18 @@
             margin-right: 10px;
         }
 
-        #task-bar #brand {
-            color: #f2f2f2;
-            font-size: 24px;
-            margin-right: auto;
-        }
+    #task-bar #brand {
+        color: #f2f2f2;
+        font-size: 24px;
+        margin-right: auto;
+    }
 
-        #task-bar a {
-            color: #f2f2f2;
-            padding: 14px 16px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
+    #task-bar a {
+        color: #f2f2f2;
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
 
         #task-bar a:hover {
             background-color: #f5e533;
@@ -124,7 +124,6 @@
     <span id="brand">Golden Gate</span>
     <a th:href="@{/Portfolio}">Portfolios</a>
 </div>
-
 <div id="inputAreas">
     <h2>Add New Stock</h2>
     <form th:action="@{/StockDetail/createNewStock}" th:method="get">
@@ -146,10 +145,12 @@
         <label for="purchasingLotAmount">Purchasing Lot Amount</label>
         <input type="number" id="purchasingLotAmount" name="purchasedLotAmount" required>
 
+        <!-- Hidden input field for portfolioId -->
         <input type="hidden" id="portfolioId" name="portfolioId" th:value="${portfolioId}">
 
         <button type="submit">Add Stock</button>
     </form>
+
 </div>
 
 </body>
