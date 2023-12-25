@@ -11,4 +11,6 @@ public interface IStockService {
     List<Stock> getStockByCountryName(String name);
 
     Stock getStockByName(String name);
+
+    void updateStockPricesRandomly();
 }

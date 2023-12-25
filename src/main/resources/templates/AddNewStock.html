@@ -89,13 +89,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#countryDropdown').change(function () {
-                const selectedValue = document.getElementById("countryDropdown").value;
-
+            // Function to fill the stock dropdown
+            function fillStockDropdown(selectedValue) {
                 $.ajax({
                     type: 'GET',
                     url: '/StockDetail/getStocksByCountry',
-                    data: {'country': selectedValue},
+                    data: { 'country': selectedValue },
                     success: function (response) {
                         var stockDropdown = $('#stockDropdown');
                         stockDropdown.empty();
@@ -108,8 +107,22 @@
                         console.error('Error:', error);
                     }
                 });
+            }
+
+            // Trigger the change event on page load to fill the stock dropdown initially
+            $('#countryDropdown').change(function () {
+                const selectedValue = $(this).val();
+                fillStockDropdown(selectedValue);
+            }).change(); // Trigger the change event on page load
+
+            // Fill related dropdown when another dropdown changes
+            $('#countryDropdown').change(function () {
+                const selectedValue = $(this).val();
+                fillStockDropdown(selectedValue);
             });
+
         });
+
         // click logo and go to the mainPage
             function goToMainPage() {
             window.location.href = "/mainPage";
@@ -122,18 +135,19 @@
 <div id="task-bar">
     <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
     <span id="brand">Golden Gate</span>
-    <a th:href="@{/Portfolio}">Portfolios</a>
+    <a th:href="@{/Portfolio/getPortfolio}">Portfolios</a>
 </div>
 <div id="inputAreas">
     <h2>Add New Stock</h2>
     <form th:action="@{/StockDetail/createNewStock}" th:method="get">
         <label for="countryDropdown">Select Country</label>
         <select id="countryDropdown">
-            <option>Please Select A Country</option>
+            <option>All Stocks</option>
             <option th:each="item : ${countryNames}" th:text="${item}"></option>
         </select>
 
         <label for="stockDropdown">Select Stock</label>
+        <input type="text" id="stockSearch" placeholder="Search stocks">
         <select id="stockDropdown" name="stockName"></select>
 
         <label for="purchasingDate">Purchasing Date</label>
@@ -154,4 +168,24 @@
 </div>
 
 </body>
+<script>
+    const stockDropdown = document.getElementById("stockDropdown");
+    const stockSearch = document.getElementById("stockSearch");
+
+    function filterStocks() {
+        const searchValue = stockSearch.value.toLowerCase();
+        const options = stockDropdown.getElementsByTagName("option");
+
+        for (let i = 0; i < options.length; i++) {
+            const textValue = options[i].textContent.toLowerCase();
+            if (textValue.includes(searchValue)) {
+                options[i].style.display = "";
+            } else {
+                options[i].style.display = "none";
+            }
+        }
+    }
+
+    stockSearch.addEventListener("input", filterStocks);
+</script>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -20,7 +21,7 @@ public class StockService implements IStockService{
 
     @Override
     public List<Stock> getAllStock() {
-        return stockRepository.findAll();
+        return stockRepository.findAllByOrderByNameAsc();
     }
 
     @Override
@@ -36,5 +37,33 @@ public class StockService implements IStockService{
     @Override
     public Stock getStockByName(String name){
         return  stockRepository.findByName(name);
+    }
+
+    @Override
+    public void updateStockPricesRandomly() {
+        List<Stock> stocks = stockRepository.findAll();
+
+        Random random = new Random();
+
+        for (Stock stock : stocks) {
+            double currentPrice = stock.getCurrentPrice();
+
+            double percentageChange = (random.nextDouble() - 0.5) * 0.03;
+
+            // Calculate the new price with the random change
+            double newPrice = currentPrice * (1 + percentageChange);
+
+            // Update the stock's price
+            stock.setPriceFiveYearsAgo(stock.getPriceOneYearAgo());
+            stock.setPriceOneYearAgo(stock.getPriceOneMonthAgo());
+            stock.setPriceOneMonthAgo(stock.getPriceThreeMonthsAgo());
+            stock.setPriceThreeMonthsAgo(stock.getPriceOneWeekAgo());
+            stock.setPriceOneWeekAgo(stock.getPriceYesterday());
+            stock.setPriceYesterday(currentPrice);
+            stock.setCurrentPrice(newPrice);
+
+            // Save the updated stock in the database
+            stockRepository.save(stock);
+        }
     }
 }

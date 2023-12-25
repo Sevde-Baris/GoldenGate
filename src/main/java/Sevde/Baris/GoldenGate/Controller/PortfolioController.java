@@ -5,6 +5,7 @@ import Sevde.Baris.GoldenGate.Model.Portfolio;
 import Sevde.Baris.GoldenGate.Service.Country.ICountryService;
 import Sevde.Baris.GoldenGate.Service.Portfolio.IPortfolioService;
 import Sevde.Baris.GoldenGate.Service.Portfolio.PortfolioService;
+import Sevde.Baris.GoldenGate.Service.Stock.IStockService;
 import Sevde.Baris.GoldenGate.Service.UserStock.BasicCRUDService.IUserStockBasicCRUDService;
 import Sevde.Baris.GoldenGate.Service.UserStock.BasicCRUDService.UserStockBasicCRUDService;
 import Sevde.Baris.GoldenGate.Service.UserStock.DetailService.IUserStockDetailService;
@@ -26,17 +27,18 @@ public class PortfolioController {
     @Autowired
     private IUserStockDetailService userStockDetailService;
     @Autowired
-    private IUserStockBasicCRUDService userStockBasicService;
+    private IStockService stockService;
 
     @GetMapping("/getPortfolio")
     public String getPortfolio(Model model){
+        stockService.updateStockPricesRandomly();
         List<Portfolio> portfolios = portfolioService.getAllPortfolios();
         List<Double> portfolioBalances = new ArrayList<>();
-        for (int i = 0; i < portfolios.size(); i++) {
-            List<UserStockGetAllResponseDTO> userStocks = userStockDetailService.getAllUserStockByPortfolioId(portfolios.get(i).getId());
+        for (Portfolio portfolio : portfolios) {
+            List<UserStockGetAllResponseDTO> userStocks = userStockDetailService.getAllUserStockByPortfolioId(portfolio.getId());
             Double portfolioBalance = 0D;
-            for (int j = 0; j < userStocks.size(); j++) {
-                portfolioBalance += userStocks.get(j).getTotalPrice();
+            for (UserStockGetAllResponseDTO userStock : userStocks) {
+                portfolioBalance += userStock.getTotalPrice();
             }
             portfolioBalances.add(portfolioBalance);
         }
@@ -47,6 +49,7 @@ public class PortfolioController {
 
     @GetMapping("/getPortfolioById")
     public String getPortfolioById(@RequestParam UUID id, Model model){
+        stockService.updateStockPricesRandomly();
         List<UserStockGetAllResponseDTO> userStocks = userStockDetailService.getAllUserStockByPortfolioId(id);
         model.addAttribute("stocks", userStocks);
         model.addAttribute("portfolioId", id);
@@ -56,6 +59,7 @@ public class PortfolioController {
     @GetMapping("/createPortfolio")
     public String createPortfolio(@RequestParam String name, Model model){
         portfolioService.createPortfolio(name);
+        stockService.updateStockPricesRandomly();
         List<Portfolio> portfolios = portfolioService.getAllPortfolios();
         model.addAttribute("portfolios", portfolios);
         return "redirect:/Portfolio/getPortfolio";
@@ -64,6 +68,7 @@ public class PortfolioController {
     @GetMapping("/deletePortfolio")
     public String deletePortfolio(@RequestParam UUID id, Model model){
         portfolioService.deletePortfolio(id);
+        stockService.updateStockPricesRandomly();
         List<Portfolio> portfolios = portfolioService.getAllPortfolios();
         model.addAttribute("portfolios", portfolios);
         return "redirect:/Portfolio/getPortfolio";
@@ -72,6 +77,7 @@ public class PortfolioController {
     @GetMapping("/updatePortfolio")
     public String updatePortfolio(@RequestParam UUID id, String name, Model model){
         portfolioService.updatePortfolio(id, name);
+        stockService.updateStockPricesRandomly();
         List<Portfolio> portfolios = portfolioService.getAllPortfolios();
         model.addAttribute("portfolios", portfolios);
         return "redirect:/Portfolio/getPortfolio";

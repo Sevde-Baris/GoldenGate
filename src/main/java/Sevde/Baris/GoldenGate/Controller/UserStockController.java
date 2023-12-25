@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller()
@@ -38,6 +39,7 @@ public class UserStockController {
 
     @GetMapping("/getStockDetail")
     public String getStockDetail(@RequestParam String stockCode, UUID portfolioId, Model model){
+        stockService.updateStockPricesRandomly();
         UserStockGetDetailResponseDto request = detailService.getDetail(portfolioId, stockCode);
         model.addAttribute("stockDetail", request);
         return "StockDetail";
@@ -52,6 +54,7 @@ public class UserStockController {
 
     @GetMapping("/createNewStock")
     public String createNewStock(@RequestParam String stockName, String purchasingDate, Double purchasingPrice, Double purchasedLotAmount, UUID portfolioId, Model model) throws ParseException {
+        stockService.updateStockPricesRandomly();
         Stock stock = stockService.getStockByName(stockName);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         UserStock userStock = new UserStock();
@@ -67,7 +70,8 @@ public class UserStockController {
 
     @GetMapping("/getStocksByCountry")
     public ResponseEntity<List<String>> getStocksByCountry(@RequestParam("country") String country) {
-        List<Stock> stocks = stockService.getStockByCountryName(country);
+        stockService.updateStockPricesRandomly();
+        List<Stock> stocks = Objects.equals(country, "All Stocks") ? stockService.getAllStock() : stockService.getStockByCountryName(country);
         List<String> stockNames = new ArrayList<>();
 
         for (Stock stock : stocks) {
@@ -79,6 +83,7 @@ public class UserStockController {
 
     @GetMapping("/deleteStock")
     public String deleteStockById(@RequestParam UUID userStockId, UUID portfolioId){
+        stockService.updateStockPricesRandomly();
         basicService.deleteUserStock(userStockId);
         return "redirect:/Portfolio/getPortfolioById?id=" + portfolioId;
     }

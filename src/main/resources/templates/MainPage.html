@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -139,9 +139,9 @@
 
 <div class="portfolio-info">
     <h2>Portfolio Information</h2>
-    <p>Total Value: $XXX,XXX</p>
-    <p>Total Stocks: XX</p>
-    <p>Investment Return: XX%</p>
+    <p th:text="'Total Value: ' + ${balance}"></p>
+    <p th:text="'Total Stocks: ' + ${totalStocks}"></p>
+    <p th:text="'Investment Return: ' + ${investmentReturn}"></p>
 </div>
 
 <div id="main-content">

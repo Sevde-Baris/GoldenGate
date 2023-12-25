@@ -63,7 +63,7 @@ public class UserStockDetailService implements IUserStockDetailService {
                         stockName,
                         userStock.getPurchasedLotAmount(),
                         userStock.getPurchasingPrice(),
-                        userStock.getPurchasingPrice() * userStock.getPurchasedLotAmount(),
+                        userStock.getStock().getCurrentPrice() * userStock.getPurchasedLotAmount(),
                         (userStock.getStock().getCurrentPrice() - userStock.getStock().getPriceYesterday()) * userStock.getPurchasedLotAmount(),
                         (userStock.getStock().getCurrentPrice() - userStock.getStock().getPriceYesterday()) / userStock.getStock().getPriceYesterday() * 100
                 );

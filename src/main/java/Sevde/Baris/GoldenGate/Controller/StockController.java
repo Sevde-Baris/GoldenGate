@@ -16,6 +16,7 @@ public class StockController {
     IStockService service;
     @RequestMapping("/getStocks")
     public String getStocks(Model model){
+        service.updateStockPricesRandomly();
         List<Stock> stocks = service.getAllStock();
         model.addAttribute("allStocks", stocks);
         return "Stocks";

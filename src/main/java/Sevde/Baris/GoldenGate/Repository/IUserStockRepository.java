@@ -11,5 +11,4 @@ import java.util.UUID;
 public interface IUserStockRepository extends JpaRepository<UserStock, UUID> {
     List<UserStock> findByPortfolioId(UUID id);
     List<UserStock> findByPortfolioIdAndStockCode(UUID portfolioId, String stockCode);
-    void deleteAllByPortfolioId(UUID id);
 }

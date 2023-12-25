@@ -26,27 +26,29 @@ public class PortfolioService implements IPortfolioService{
     }
 
     @Override
-    public Portfolio createPortfolio(String name) {
+    public void createPortfolio(String name) {
         Portfolio portfolio = new Portfolio();
         portfolio.setName(name);
-        return portfolioRepository.save(portfolio);
+        portfolioRepository.save(portfolio);
     }
 
     @Override
     public void deletePortfolio(UUID id) {
-        userStockRepository.deleteAllByPortfolioId(id);
+        List<UserStock> stocksToDelete = userStockRepository.findByPortfolioId(id);
+        for (UserStock stock : stocksToDelete){
+            userStockRepository.deleteById(stock.getId());
+        }
         portfolioRepository.deleteById(id);
     }
 
     @Override
-    public Optional<Portfolio> updatePortfolio(UUID id, String name) {
+    public void updatePortfolio(UUID id, String name) {
         Optional<Portfolio> portfolioToUpdateOptional = portfolioRepository.findById(id);
         if(portfolioToUpdateOptional.isPresent()){
             Portfolio portfolioToUpdate = portfolioToUpdateOptional.get();
             if(name != null) portfolioToUpdate.setName(name);
-            return Optional.of(portfolioRepository.save(portfolioToUpdate));
+            portfolioRepository.save(portfolioToUpdate);
         }
-        return Optional.empty();
     }
 
     @Override

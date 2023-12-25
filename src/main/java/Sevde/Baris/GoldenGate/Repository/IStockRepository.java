@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface IStockRepository extends JpaRepository<Stock, UUID> {
     List<Stock> findByCountry(Country country);
     Stock findByName(String Name);
+    List<Stock> findAllByOrderByNameAsc();
 }
