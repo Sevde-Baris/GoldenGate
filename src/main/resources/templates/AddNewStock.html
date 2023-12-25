@@ -20,14 +20,14 @@
         }
 
         #task-bar img {
-            width: 90px;
+            width: 100px;
             height: auto;
             margin-right: 10px;
         }
 
     #task-bar #brand {
         color: #f2f2f2;
-        font-size: 24px;
+        font-size: 26px;
         margin-right: auto;
     }
 
@@ -147,7 +147,7 @@
 <div id="task-bar">
     <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
     <span id="brand">Golden Gate</span>
-    <a th:href="@{/Portfolio}">Portfolios</a>
+    <a th:href="@{/Portfolio/getPortfolio}">Portfolios</a>
     <a href="/AllStocks/getStocks">All Stocks</a>
 </div>
 <div id="inputAreas">

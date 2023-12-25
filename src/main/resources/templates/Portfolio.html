@@ -21,14 +21,14 @@
         }
 
         #task-bar img {
-            width: 90px;
+            width: 100px;
             height: auto;
             margin-right: 10px;
         }
 
         #task-bar #brand {
             color: #f2f2f2;
-            font-size: 24px;
+            font-size: 26px;
             margin-right: auto;
         }
 
@@ -246,6 +246,10 @@
         function goToMainPage() {
             window.location.href = "/mainPage";
         }
+        function confirmDelete() {
+            return confirm("Are you sure about deleting this portfolio?" +
+                " All stocks belonging to this portfolio will be deleted.");
+        }
     </script>
 </head>
 <body>
@@ -280,7 +284,7 @@
                             <button type="submit" class="show-stocks-button">Show Stocks</button>
                         </form>
                         <button type="button" id="updateButton" class="update-button" th:value="${portfolio.id}" onclick="openUpdatePopup()">Update</button>
-                        <form th:action="@{/Portfolio/deletePortfolio}" th:method="get">
+                        <form th:action="@{/Portfolio/deletePortfolio}" th:method="get" onsubmit="return confirmDelete()">
                             <input type="hidden" th:name="id" th:value="${portfolio.id}"/>
                             <button type="submit" class="delete-button">Delete</button>
                         </form>
