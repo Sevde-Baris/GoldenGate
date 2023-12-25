@@ -20,7 +20,7 @@
         }
 
         #task-bar img {
-            width: 80px;
+            width: 90px;
             height: auto;
             margin-right: 10px;
         }
@@ -50,7 +50,7 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgb(14, 4, 4);
         }
 
         label {
@@ -84,6 +84,20 @@
         button:hover {
             background-color: #f5e533;
             color: black;
+        }
+        #inputAreas {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgb(14, 4, 4);
+            transition: box-shadow 0.3s;
+        }
+
+        #inputAreas:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -123,6 +137,7 @@
     <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
     <span id="brand">Golden Gate</span>
     <a th:href="@{/Portfolio}">Portfolios</a>
+    <a href="/AllStocks/getStocks">All Stocks</a>
 </div>
 <div id="inputAreas">
     <h2>Add New Stock</h2>
