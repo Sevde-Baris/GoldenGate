@@ -88,34 +88,39 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#countryDropdown').change(function() {
+        $(document).ready(function () {
+            $('#countryDropdown').change(function () {
                 const selectedValue = document.getElementById("countryDropdown").value;
 
                 $.ajax({
                     type: 'GET',
                     url: '/StockDetail/getStocksByCountry',
-                    data: { 'country': selectedValue },
-                    success: function(response) {
+                    data: {'country': selectedValue},
+                    success: function (response) {
                         var stockDropdown = $('#stockDropdown');
                         stockDropdown.empty();
 
-                        $.each(response, function(index, item) {
+                        $.each(response, function (index, item) {
                             stockDropdown.append($('<option></option>').text(item));
                         });
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error('Error:', error);
                     }
                 });
             });
         });
+        // click logo and go to the mainPage
+            function goToMainPage() {
+            window.location.href = "/mainPage";
+        }
+
     </script>
 </head>
 <body>
 
 <div id="task-bar">
-    <img th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo"/>
+    <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
     <span id="brand">Golden Gate</span>
     <a th:href="@{/Portfolio}">Portfolios</a>
 </div>

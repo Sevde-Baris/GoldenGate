@@ -7,7 +7,7 @@
     <title>GoldenGate_mainPage</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
+
         body {
             font-family: 'Roboto Condensed', sans-serif;
             margin: 0;
@@ -15,11 +15,9 @@
             background-color: #f4f4f4;
         }
 
-        /* Task Bar Styles */
         #task-bar {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             background-color: #5520c0;
             color: #f2f2f2;
             border-bottom: 2px solid #fff;
@@ -28,7 +26,7 @@
         }
 
         #task-bar img {
-            width: 60px;
+            width: 80px;
             height: auto;
             margin-right: 10px;
         }
@@ -48,12 +46,15 @@
             background-color: #f5e533;
             color: #000;
         }
+        #task-bar a:last-child {
+            color: #fff;
+            margin-left: auto;
+        }
 
-        /* Content Styles */
         .content {
             padding: 20px;
             margin: 20px auto;
-            max-width: 1200px; /* Increased max-width */
+            max-width: 1200px;
         }
 
         h1 {
@@ -62,10 +63,9 @@
             margin-bottom: 20px;
         }
 
-        /* Search Input Styles */
         #searchInput {
-            width: 100%; /* Full width */
-            padding: 12px; /* Adjusted padding */
+            width: 100%;
+            padding: 12px;
             margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -77,9 +77,8 @@
             color: #aaa;
         }
 
-        /* Table Styles */
         table {
-            width: 100%; /* Full width */
+            width: 100%;
             border-collapse: collapse;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             background-color: #fff;
@@ -106,11 +105,16 @@
         }
     </style>
 
+    <script>
+        function goToMainPage() {
+            window.location.href = "/mainPage";
+        }
+    </script>
 </head>
 
 <body>
 <div id="task-bar">
-    <img src="/image/goldengateicon.png" alt="Golden Gate Logo" />
+    <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
     <span id="brand">Golden Gate</span>
     <a href="/Portfolio/getPortfolio">Portfolios</a>
 </div>

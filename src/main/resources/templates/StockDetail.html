@@ -8,12 +8,48 @@
             background-color: #f8f8f8;
             color: #333;
             margin: 0;
-            padding: 20px;
+            margin-bottom: 25px;
             text-align: center;
+        }
+        #task-bar {
+            display: flex;
+            align-items: center;
+            background-color: #5520c0;
+            border-bottom: 1px solid #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #task-bar img {
+            width: 80px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        #task-bar #brand {
+            color: #f2f2f2;
+            font-size: 24px;
+            margin-right: auto;
+        }
+
+        #task-bar a {
+            color: #f2f2f2;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        #task-bar a:hover {
+            background-color: #f5e533;
+            color: black;
+        }
+
+        .content {
+            padding: 10px;
         }
 
         h1, h2 {
-            color: #663399;
+            color: #5520c0;
         }
 
         p {
@@ -37,7 +73,7 @@
         }
 
         th {
-            background-color: #663399; /* Purple */
+            background-color: #5520c0;
             color: #fff;
         }
 
@@ -46,12 +82,22 @@
         }
 
         span {
-            color: #663399;
+            color: #5520c0;
             font-weight: bold;
         }
     </style>
+    <script>
+        function goToMainPage() {
+            window.location.href = "/mainPage";
+        }
+    </script>
 </head>
 <body>
+<div id="task-bar">
+    <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
+    <span id="brand">Golden Gate</span>
+    <a href="/Portfolio/getPortfolio">Portfolios</a>
+</div>
 <h1>Stock Detail</h1>
 <!-- Display rough data -->
 <h2>Rough Data:</h2>

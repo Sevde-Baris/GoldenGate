@@ -80,11 +80,16 @@
       color: black;
     }
   </style>
+  <script>
+    function goToMainPage() {
+      window.location.href = "/mainPage";
+    }
+  </script>
 
 </head>
 <body>
 <div id="task-bar">
-  <img th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo"/>
+  <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
   <span id="brand">Golden Gate</span>
   <a th:href="@{/StockDetail/addNewStock(portfolioId=${portfolioId})}">Add New Stock</a>
 </div>

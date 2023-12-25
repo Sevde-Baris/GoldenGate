@@ -22,7 +22,7 @@
         }
 
         #task-bar img {
-            width: 80px;
+            width: 90px;
             height: auto;
             margin-right: 10px;
         }
@@ -244,12 +244,15 @@
         function closeUpdatePopup() {
             document.getElementById('updatePopup').style.display = 'none';
         }
+        function goToMainPage() {
+            window.location.href = "/mainPage";
+        }
     </script>
 </head>
 <body>
 
 <div id="task-bar">
-    <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo"/>
+    <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
     <span id="brand">Golden Gate</span>
     <a href="javascript:void(0);" onclick="openPopup()">Create New Portfolio</a>
     <a href="/AllStocks/getStocks">All Stocks</a>
