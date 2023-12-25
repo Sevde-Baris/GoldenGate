@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <link rel="icon" href="/image/goldengateicon.png" type="image/png" sizes="96x96">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page | Golden Gate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #task-bar {
+            display: flex;
+            align-items: center;
+            background-color: #5520c0;
+            border-bottom: 1px solid #fff;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #task-bar img {
+            width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        #task-bar #brand {
+            color: #f2f2f2;
+            font-size: 26px;
+            margin-right: auto;
+        }
+
+        #task-bar a {
+            color: #f2f2f2;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        #task-bar a:hover {
+            background-color: #ffdb58;
+            color: #333;
+        }
+
+        #main-content {
+            position: relative;
+            z-index: 1;
+            color: #5520c0;
+            padding: 20px;
+            background-color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 20px;
+        }
+
+        #main-content p {
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .mainpagepic {
+            margin-top: 120px;
+            width: 80%;
+            max-width: 550px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        #user-info,
+        .portfolio-info {
+            margin-left: 100px;
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+        }
+
+        #user-info h2,
+        .portfolio-info h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #5520c0;
+        }
+
+        #user-info p,
+        .portfolio-info p {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #666;
+        }
+        #user-info,
+        .portfolio-info,
+        #main-content {
+            margin-top: 75px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div id="task-bar">
+    <img src="/image/goldengateicon.png" alt="Golden Gate Logo" />
+    <span id="brand">Golden Gate</span>
+    <a href="/Portfolio/getPortfolio">Portfolios</a>
+    <a href="/AllStocks/getStocks">All Stocks</a>
+</div>
+
+<div id="user-info">
+    <h2>User Information</h2>
+    <p>User: Mauro Casas</p>
+    <p>User ID: 281*****549</p>
+    <p>User PN: +34********</p>
+    <p>Subscription Status: Active</p>
+    <p>Account Type: Premium</p>
+</div>
+
+<div class="portfolio-info">
+    <h2>Portfolio Information</h2>
+    <p th:text="'Total Value: ' + ${balance}"></p>
+    <p th:text="'Total Stocks: ' + ${totalStocks}"></p>
+    <p th:text="'Investment Return: ' + ${investmentReturn}"></p>
+</div>
+
+<div id="main-content">
+    <p>
+        Welcome to the Golden Gate World!
+        Entering this exclusive place where time is more valuable than gold offers a meaningful experience.
+        It's not just a platform; it's a safe harbor where you can easily manage your financial situation.
+    </p>
+</div>
+
+<img src="/image/mainPage.png" alt="Golden Gate Logo" class="mainpagepic" />
+
+</body>
+</html>

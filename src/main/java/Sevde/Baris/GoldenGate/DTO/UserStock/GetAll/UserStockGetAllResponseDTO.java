@@ -4,10 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @ToString
 public class UserStockGetAllResponseDTO {
+    private UUID id;
     private String stockCode;
     private String stockName;
     private Double totalLotAmount;
@@ -16,7 +19,8 @@ public class UserStockGetAllResponseDTO {
     private Double dailyProfit;
     private Double dailyProfitRate;
 
-    public UserStockGetAllResponseDTO(String stockCode, String stockName, Double totalLotAmount, Double averageCost, Double totalPrice, Double dailyProfit, Double dailyProfitRate) {
+    public UserStockGetAllResponseDTO(UUID id, String stockCode, String stockName, Double totalLotAmount, Double averageCost, Double totalPrice, Double dailyProfit, Double dailyProfitRate) {
+        this.id = id;
         this.stockCode = stockCode;
         this.stockName = stockName;
         this.totalLotAmount = totalLotAmount;

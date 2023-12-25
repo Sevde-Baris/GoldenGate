@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface IStockRepository extends JpaRepository<Stock, UUID> {
-
     List<Stock> findByCountry(Country country);
+    Stock findByName(String Name);
+    List<Stock> findAllByOrderByNameAsc();
 }

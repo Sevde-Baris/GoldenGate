@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="icon" href="/image/goldengateicon.png" type="image/png" sizes="96x96">
+    <meta charset="UTF-8">
+    <title>Add New Stock | Golden Gate</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #task-bar {
+            display: flex;
+            align-items: center;
+            background-color: #5520c0;
+            border-bottom: 1px solid #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #task-bar img {
+            width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        #task-bar #brand {
+            color: #f2f2f2;
+            font-size: 26px;
+            margin-right: auto;
+        }
+
+        #task-bar a {
+            color: #f2f2f2;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        #task-bar a:hover {
+            background-color: #f5e533;
+            color: black;
+        }
+
+        #inputAreas {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgb(14, 4, 4);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        button {
+            background-color: #5520c0;
+            color: #fff;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #f5e533;
+            color: black;
+        }
+        #inputAreas {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgb(14, 4, 4);
+            transition: box-shadow 0.3s;
+        }
+
+        #inputAreas:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to fill the stock dropdown
+            function fillStockDropdown(selectedValue) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/StockDetail/getStocksByCountry',
+                    data: { 'country': selectedValue },
+                    success: function (response) {
+                        var stockDropdown = $('#stockDropdown');
+                        stockDropdown.empty();
+
+                        $.each(response, function (index, item) {
+                            stockDropdown.append($('<option></option>').text(item));
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+            // Trigger the change event on page load to fill the stock dropdown initially
+            $('#countryDropdown').change(function () {
+                const selectedValue = $(this).val();
+                fillStockDropdown(selectedValue);
+            }).change(); // Trigger the change event on page load
+
+            // Fill related dropdown when another dropdown changes
+            $('#countryDropdown').change(function () {
+                const selectedValue = $(this).val();
+                fillStockDropdown(selectedValue);
+            });
+        });
+        // click logo and go to the mainPage
+            function goToMainPage() {
+            window.location.href = "/mainPage";
+        }
+
+    </script>
+</head>
+<body>
+
+<div id="task-bar">
+    <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
+    <span id="brand">Golden Gate</span>
+    <a th:href="@{/Portfolio/getPortfolio}">Portfolios</a>
+    <a href="/AllStocks/getStocks">All Stocks</a>
+</div>
+<div id="inputAreas">
+    <h2 style="color: #5520c0">Add New Stock</h2>
+    <form th:action="@{/StockDetail/createNewStock}" th:method="get">
+        <label style="color: #5520c0" for="countryDropdown">Select Country</label>
+        <select id="countryDropdown">
+            <option>All Stocks</option>
+            <option th:each="item : ${countryNames}" th:text="${item}"></option>
+        </select>
+
+        <label style="color: #5520c0" for="stockDropdown">Select Stock</label>
+        <input type="text" id="stockSearch" placeholder="Search stocks">
+        <select id="stockDropdown" name="stockName"></select>
+
+        <label style="color: #5520c0" for="purchasingDate">Purchasing Date</label>
+        <input type="date" id="purchasingDate" name="purchasingDate" required>
+
+        <label style="color: #5520c0" for="purchasingPrice">Purchasing Price</label>
+        <input type="number" id="purchasingPrice" name="purchasingPrice" required>
+
+        <label style="color: #5520c0" for="purchasingLotAmount">Purchasing Lot Amount</label>
+        <input type="number" id="purchasingLotAmount" name="purchasedLotAmount" required>
+
+        <!-- Hidden input field for portfolioId -->
+        <input type="hidden" id="portfolioId" name="portfolioId" th:value="${portfolioId}">
+
+        <button type="submit">Add Stock</button>
+    </form>
+
+</div>
+
+</body>
+<script>
+    const stockDropdown = document.getElementById("stockDropdown");
+    const stockSearch = document.getElementById("stockSearch");
+
+    function filterStocks() {
+        const searchValue = stockSearch.value.toLowerCase();
+        const options = stockDropdown.getElementsByTagName("option");
+
+        for (let i = 0; i < options.length; i++) {
+            const textValue = options[i].textContent.toLowerCase();
+            if (textValue.includes(searchValue)) {
+                options[i].style.display = "";
+            } else {
+                options[i].style.display = "none";
+            }
+        }
+    }
+    stockSearch.addEventListener("input", filterStocks);
+</script>
+</html>

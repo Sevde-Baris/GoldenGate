@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image/goldengateicon.png" type="image/png" sizes="96x96">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stocks | Golden Gate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+
+
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #task-bar {
+            display: flex;
+            align-items: center;
+            background-color: #5520c0;
+            color: #f2f2f2;
+            border-bottom: 2px solid #fff;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #task-bar img {
+            width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        #task-bar #brand {
+            font-size: 26px;
+        }
+
+        #task-bar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+        }
+
+        #task-bar a:hover {
+            background-color: #f5e533;
+            color: #000;
+        }
+        #task-bar a:last-child {
+            color: #fff;
+            margin-left: auto;
+        }
+
+        .content {
+
+            margin: 1px auto;
+            max-width: 1400px;
+        }
+
+        h1 {
+            color: #5520c0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 18px;
+            height: 50px;
+        }
+
+        #searchInput::placeholder {
+            color: #aaa;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            font-size: 15px;
+            padding: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #5520c0;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5e533;
+            color: #000;
+        }
+
+        #stockDiv{
+            overflow-x: auto;
+            max-height: 500px;
+        }
+    </style>
+
+    <script>
+        function goToMainPage() {
+            window.location.href = "/mainPage";
+        }
+    </script>
+
+
+</head>
+
+<body>
+<div id="task-bar">
+    <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
+    <span id="brand">Golden Gate</span>
+    <a href="/Portfolio/getPortfolio">Portfolios</a>
+</div>
+<div class="content">
+    <h1>All Stocks</h1>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <div id="stockDiv">
+        <table id="stocksTable">
+            <thead>
+            <tr>
+                <th>Stock Name</th>
+                <th>Stock Code</th>
+                <th>Country</th>
+                <th>Current Price</th>
+                <th>Yesterday Price</th>
+                <th>One Week Ago Price</th>
+                <th>One Month Ago Price</th>
+                <th>Three Months Ago Price</th>
+                <th>One Year Ago Price</th>
+                <th>5 Years Ago Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="data : ${allStocks}">
+                <td th:text="${data.getName()}"></td>
+                <td th:text="${data.getCode()}"></td>
+                <td th:text="${data.getCountry().getName()}"></td>
+                <td th:text="${data.getCurrentPrice()}"></td>
+                <td th:text="${data.getPriceYesterday()}"></td>
+                <td th:text="${data.getPriceOneWeekAgo()}"></td>
+                <td th:text="${data.getPriceOneMonthAgo()}"></td>
+                <td th:text="${data.getPriceThreeMonthsAgo()}"></td>
+                <td th:text="${data.getPriceOneYearAgo()}"></td>
+                <td th:text="${data.getPriceFiveYearsAgo()}"></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<script>
+    function searchStocks() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toUpperCase();
+        const table = document.getElementById('stocksTable');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const rowData = rows[i].getElementsByTagName('td');
+            let found = false;
+
+            for (let j = 0; j < rowData.length; j++) {
+                const cell = rowData[j];
+                if (cell) {
+                    const cellText = cell.textContent || cell.innerText;
+                    if (cellText.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            if (found) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+
+        const headerRow = table.querySelector('thead tr');
+        headerRow.style.display = '';
+
+    }
+
+    document.getElementById('searchInput').addEventListener('keyup', searchStocks);
+</script>
+</body>
+
+</html>

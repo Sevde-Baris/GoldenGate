@@ -1,36 +1,102 @@
-<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
+  <link rel="icon" href="/image/goldengateicon.png" type="image/png" sizes="96x96">
   <meta charset="UTF-8">
-  <title>Portfolios</title>
+  <title>Selected Portfolio | Golden Gate</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+      font-family: 'Roboto Condensed', sans-serif;
+      margin: 0;
     }
+    #task-bar {
+      display: flex;
+      align-items: center;
+      background-color: #5520c0;
+      border-bottom: 1px solid #fff;
+      text-align: center;
+      padding: 10px;
+    }
+
+    #task-bar img {
+      width: 100px;
+      height: auto;
+      margin-right: 10px;
+    }
+
+    #task-bar #brand {
+      color: #f2f2f2;
+      font-size: 26px;
+      margin-right: auto;
+    }
+
+    #task-bar a {
+      color: #f2f2f2;
+      padding: 14px 16px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    #task-bar a:hover {
+      background-color: #f5e533;
+      color: black;
+    }
+
     table {
-      width: 100%;
+      width: 80%;
       border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 40px;
+      align-items: center;
+      justify-content: center;
+      margin-left: 140px;
     }
     th, td {
-      border: 1px solid #a74444;
+      border: 1px solid #5520c0;
       padding: 8px;
       text-align: left;
     }
     th {
-      background-color: #c03232;
+      background-color: #5520c0;
+      color: #fff;
     }
     tr:nth-child(even) {
-      background-color: #f68585;
+      background-color: #fff;
     }
     tr:hover {
-      background-color: #772323;
+      background-color: #f5e533;
+    }
+    h1 {
+      font-family: 'Roboto Condensed', sans-serif;
+      text-align: center;
+    }
+    button {
+      background-color: #5520c0;
+      color: #f2f2f2;
+      padding: 8px 12px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #f5e533;
+      color: black;
     }
   </style>
+  <script>
+    function goToMainPage() {
+      window.location.href = "/mainPage";
+    }
+  </script>
+
 </head>
 <body>
-<h1>Selected Portfolio</h1>
+<div id="task-bar">
+  <img width="320px" height="70px" th:src="@{/image/goldengateicon.png}" alt="Golden Gate Logo " onclick="goToMainPage()"/>
+  <span id="brand">Golden Gate</span>
+  <a th:href="@{/StockDetail/addNewStock(portfolioId=${portfolioId})}">Add New Stock</a>
+  <a href="/AllStocks/getStocks">All Stocks</a>
+</div>
+<h1 style="color: #5520c0" th:text="${portfolioName}"></h1>
   <table>
     <thead>
     <tr>
@@ -40,6 +106,7 @@
       <th>Average Cost</th>
       <th>Daily Profit</th>
       <th>Daily Profit Rate</th>
+      <th>Operations</th>
     </tr>
     </thead>
     <tbody>
@@ -51,11 +118,18 @@
       <td th:text="${data.getDailyProfit()}"></td>
       <td th:text="${data.getDailyProfitRate()}"></td>
       <td>
-        <form th:action="@{/StockDetail/getStockDetail}" th:method="get">
-          <input type="hidden" th:name="portfolioId" th:value="${portfolioId}">
-          <input type="hidden" th:name="stockCode" th:value="${data.getStockCode()}">
-          <button type="submit">Show Detail</button>
-        </form>
+        <div style="display: flex; gap: 8px;">
+          <form th:action="@{/StockDetail/getStockDetail}" th:method="get">
+            <input type="hidden" th:name="portfolioId" th:value="${portfolioId}">
+            <input type="hidden" th:name="stockCode" th:value="${data.getStockCode()}">
+            <button type="submit">Show Details</button>
+          </form>
+          <form th:action="@{/StockDetail/deleteStock}" th:method="get">
+            <input type="hidden" th:name="userStockId" th:value="${data.getId()}">
+            <input type="hidden" th:name="portfolioId" th:value="${portfolioId}">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
       </td>
     </tr>
     </tbody>

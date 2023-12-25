@@ -44,6 +44,7 @@ public class UserStockDetailService implements IUserStockDetailService {
         for (UserStock userStock : stocks) {
             String stockCode = userStock.getStock().getCode();
             String stockName = userStock.getStock().getName();
+            UUID stockId = userStock.getId();
 
             // Check if the stockCode is already in the result list
             UserStockGetAllResponseDTO existingDTO = findDTOByStockCode(result, stockCode);
@@ -57,11 +58,12 @@ public class UserStockDetailService implements IUserStockDetailService {
             } else {
                 // Create a new DTO
                 UserStockGetAllResponseDTO newDTO = new UserStockGetAllResponseDTO(
+                        stockId,
                         stockCode,
                         stockName,
                         userStock.getPurchasedLotAmount(),
                         userStock.getPurchasingPrice(),
-                        userStock.getPurchasingPrice() * userStock.getPurchasedLotAmount(),
+                        userStock.getStock().getCurrentPrice() * userStock.getPurchasedLotAmount(),
                         (userStock.getStock().getCurrentPrice() - userStock.getStock().getPriceYesterday()) * userStock.getPurchasedLotAmount(),
                         (userStock.getStock().getCurrentPrice() - userStock.getStock().getPriceYesterday()) / userStock.getStock().getPriceYesterday() * 100
                 );
