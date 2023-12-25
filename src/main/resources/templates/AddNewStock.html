@@ -152,25 +152,25 @@
     <a href="/AllStocks/getStocks">All Stocks</a>
 </div>
 <div id="inputAreas">
-    <h2>Add New Stock</h2>
+    <h2 style="color: #5520c0">Add New Stock</h2>
     <form th:action="@{/StockDetail/createNewStock}" th:method="get">
-        <label for="countryDropdown">Select Country</label>
+        <label style="color: #5520c0" for="countryDropdown">Select Country</label>
         <select id="countryDropdown">
             <option>All Stocks</option>
             <option th:each="item : ${countryNames}" th:text="${item}"></option>
         </select>
 
-        <label for="stockDropdown">Select Stock</label>
+        <label style="color: #5520c0" for="stockDropdown">Select Stock</label>
         <input type="text" id="stockSearch" placeholder="Search stocks">
         <select id="stockDropdown" name="stockName"></select>
 
-        <label for="purchasingDate">Purchasing Date</label>
+        <label style="color: #5520c0" for="purchasingDate">Purchasing Date</label>
         <input type="date" id="purchasingDate" name="purchasingDate" required>
 
-        <label for="purchasingPrice">Purchasing Price</label>
+        <label style="color: #5520c0" for="purchasingPrice">Purchasing Price</label>
         <input type="number" id="purchasingPrice" name="purchasingPrice" required>
 
-        <label for="purchasingLotAmount">Purchasing Lot Amount</label>
+        <label style="color: #5520c0" for="purchasingLotAmount">Purchasing Lot Amount</label>
         <input type="number" id="purchasingLotAmount" name="purchasedLotAmount" required>
 
         <!-- Hidden input field for portfolioId -->

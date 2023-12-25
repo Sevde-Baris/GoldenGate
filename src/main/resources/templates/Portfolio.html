@@ -263,7 +263,7 @@
 </div>
 
 <div class="content">
-    <h1>Portfolios</h1>
+    <h1 style="color: #5520c0">Portfolios</h1>
     <form th:action="@{/Portfolio/getPortfolioById}" th:method="get">
         <table>
             <thead>
@@ -302,8 +302,8 @@
 <div id="popup" style="display: none;">
     <div style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%;">
         <div style="background-color: #fff; width: 300px; margin: 100px auto; padding: 20px; border-radius: 5px;">
-            <h2>Create New Portfolio</h2>
-            <label for="portfolioName">Portfolio Name:</label>
+            <h2 style="color: #5520c0">Create New Portfolio</h2>
+            <label style="color: #5520c0" for="portfolioName">Portfolio Name:</label>
             <form th:action="@{/Portfolio/createPortfolio}" th:method="get">
                 <input type="text" id="portfolioName" name="name">
                 <br>
@@ -313,11 +313,11 @@
         </div>
     </div>
 </div>
-<div id="updatePopup" style="display: none;">
+<div id="updatePopup" style="display: none;" >
     <div style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%;">
         <div style="background-color: #fff; width: 300px; margin: 100px auto; padding: 20px; border-radius: 5px;">
-            <h2>Update Portfolio</h2>
-            <label for="portfolioName">Portfolio Name:</label>
+            <h2 style="color: #5520c0">Update Portfolio</h2>
+            <label style="color: #5520c0" for="portfolioName">Portfolio Name:</label>
             <form th:action="@{/Portfolio/updatePortfolio}" th:method="get">
                 <input type="hidden" id="Id" name="id">
                 <input type="text" id="Name" name="name" required>

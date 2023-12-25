@@ -53,6 +53,7 @@ public class PortfolioController {
         List<UserStockGetAllResponseDTO> userStocks = userStockDetailService.getAllUserStockByPortfolioId(id);
         model.addAttribute("stocks", userStocks);
         model.addAttribute("portfolioId", id);
+        model.addAttribute("portfolioName", portfolioService.getPortfolioById(id).get().getName());
         return "SelectedPortfolio";
     }
 
