@@ -17,6 +17,18 @@ Golden Gate boasts an intuitive and user-friendly interface, making it accessibl
 ## Why Golden Gate?
 In a fast-paced world, Golden Gate saves time for investors juggling diverse portfolios across platforms and countries. With a centralized interface, it empowers users to make informed decisions and optimize investment strategies.
 
-## Who maintains and contributes to the project ?
+## Technologies Used
+
+- **Spring Boot** 
+
+- **Thymeleaf**
+
+- **PostgreSQL** 
+
+- **Spring Data JPA** 
+
+- **Lombok** 
+
+## Who maintains and contributes to the project ?  <br/>
 Sevde Seçer - https://github.com/sevdesecer  <br/>
 Barış Atasoy - https://github.com/the-atasoy
