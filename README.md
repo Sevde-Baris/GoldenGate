@@ -18,5 +18,5 @@ Golden Gate boasts an intuitive and user-friendly interface, making it accessibl
 In a fast-paced world, Golden Gate saves time for investors juggling diverse portfolios across platforms and countries. With a centralized interface, it empowers users to make informed decisions and optimize investment strategies.
 
 ## Who maintains and contributes to the project ?
-Sevde Seçer - https://github.com/sevdesecer
+Sevde Seçer - https://github.com/sevdesecer  <br/>
 Barış Atasoy - https://github.com/the-atasoy
