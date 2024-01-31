@@ -27,8 +27,6 @@ In a fast-paced world, Golden Gate saves time for investors juggling diverse por
 
 - **Spring Data JPA** 
 
-- **Lombok** 
-
 ## Who maintains and contributes to the project ?  <br/>
 Sevde Seçer - https://github.com/sevdesecer  <br/>
 Barış Atasoy - https://github.com/the-atasoy
